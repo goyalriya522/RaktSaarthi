@@ -1,7 +1,22 @@
 import axios from 'axios';
 
+const getBaseURL = () => {
+  let url = import.meta.env.VITE_API_URL;
+  if (url) {
+    url = url.trim().replace(/\/$/, '');
+    if (!url.endsWith('/api')) {
+      url = `${url}/api`;
+    }
+    return url;
+  }
+  if (import.meta.env.PROD) {
+    return 'https://raktsaarthi-1.onrender.com/api';
+  }
+  return '/api';
+};
+
 const API = axios.create({
-  baseURL: '/api',
+  baseURL: getBaseURL(),
   headers: {
     'Content-Type': 'application/json',
   },

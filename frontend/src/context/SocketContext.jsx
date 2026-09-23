@@ -53,7 +53,22 @@ export const SocketProvider = ({ children }) => {
       };
       window.addEventListener('online', handleOnline);
 
-      const newSocket = io('/', {
+      const getSocketURL = () => {
+        let url = import.meta.env.VITE_SOCKET_URL || import.meta.env.VITE_API_URL;
+        if (url) {
+          url = url.trim().replace(/\/$/, '');
+          if (url.endsWith('/api')) {
+            url = url.slice(0, -4);
+          }
+          return url;
+        }
+        if (import.meta.env.PROD) {
+          return 'https://raktsaarthi-1.onrender.com';
+        }
+        return 'http://localhost:5000';
+      };
+
+      const newSocket = io(getSocketURL(), {
         transports: ['websocket', 'polling']
       });
 
