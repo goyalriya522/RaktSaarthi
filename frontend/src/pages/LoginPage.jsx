@@ -23,6 +23,7 @@ const LoginPage = () => {
         const role = res.user.role;
         if (role === 'hospital') navigate('/hospital/dashboard');
         else if (role === 'bloodbank') navigate('/blood-bank/dashboard');
+        else if (role === 'donor') navigate('/donor/dashboard');
         else if (role === 'admin') navigate('/admin');
         else navigate('/patient/requests');
       }
